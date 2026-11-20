@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bitacora APK · Creador de apps</title>
-<meta name="theme-color" content="#0d1117">
+<title>Bitácora App · Creador de apps</title>
+<meta name="theme-color" content="#000000">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 :root{--bg:#000;--panel:#080808;--border:#1c1c1c;--tx:#f2f2f2;--sub:#969696;--ac:#8b5cf6;--ok:#2f9e6e;--err:#d64545;--warn:#d29922}
@@ -76,19 +76,17 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
 .zona input{display:none}
 .aviso{font-size:12px;color:var(--warn);margin-top:6px}
 .ult{font-size:11.5px;color:var(--sub);margin-top:8px}
-#qrWrap{text-align:center;margin-top:10px}
-#qrWrap canvas{background:#fff;border-radius:8px;padding:6px}
 </style>
-<style id="lf-tema">html,body{background:#000 !important;color:#f2f2f2 !important;font-family:-apple-system,'Segoe UI',Roboto,Arial,sans-serif !important;font-size:16px !important}</style></head>
+</head>
 <body>
 <div id="bannerOff">⚠ Sin conexión — los cambios se guardan localmente y se reintentan al reconectar.</div>
 <div id="toast"></div>
 
 <header>
-  <div class="ico">⚙️</div>
-  <div><h1>Bitacora APK</h1><span class="sub">Apps, juegos y webs para clientes</span></div>
+  <div class="ico">📓</div>
+  <div><h1>Bitácora App</h1><span class="sub">Apps, juegos y webs para clientes</span></div>
   <span class="pill" id="pillGh">GitHub: <span class="spinner"></span></span>
-    <button class="btn pvx" id="bCfg" title="Elegir servidor" aria-label="Elegir servidor">🔧</button>
+  <button class="btn pvx" id="bCfg" title="Servidor" aria-label="Configurar servidor">🔧</button>
 </header>
 
 <div class="card" id="c1">
@@ -107,13 +105,10 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
 
 <div class="card hidden" id="c2">
   <h2>2 · Tipo de código</h2>
-  <div class="d">Web: pegá el código, subí un ZIP con HTML+imágenes, o subí imágenes sueltas. Nativos: el proyecto sale de la plantilla automática.</div>
+  <div class="d">Web: pegá el código, subí un ZIP con HTML+imágenes, o subí imágenes sueltas.</div>
   <label>Tecnología</label>
   <select id="fKind">
     <option value="web" selected>Web / APK (HTML + Capacitor)</option>
-    <option value="kotlin">Kotlin nativo (Android)</option>
-    <option value="flutter">Flutter (Dart)</option>
-    <option value="rn">React Native (JavaScript)</option>
   </select>
 
   <div id="cajaCodigo" style="margin-top:10px">
@@ -132,9 +127,9 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
     <div id="zipMsg" class="aviso"></div>
     <div id="zipChips" style="margin-top:6px"></div>
 
-    <label style="margin-top:10px">🖼 Subir imágenes sueltas (se guardan con su nombre)</label>
+    <label style="margin-top:10px">🖼 Subir imágenes sueltas</label>
     <label class="zona" id="zonaImg" for="imgFiles">
-      Arrastrá imágenes (png, jpg, webp, svg) o tocá para elegir
+      Arrastrá imágenes o tocá para elegir
       <input type="file" id="imgFiles" accept="image/*" multiple>
     </label>
     <div id="imgChips" style="margin-top:6px"></div>
@@ -145,56 +140,52 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
       <div class="coins" id="coinsInfo">0 coincidencias</div>
       <div class="coinc" id="coincList"></div>
       <div class="reemplazo">
-        <input type="text" id="reemplazarCon" placeholder="Reemplazar por… (vacío = crear fragmento nuevo abajo)">
+        <input type="text" id="reemplazarCon" placeholder="Reemplazar por…">
         <div class="row">
           <button class="btn" id="bReemplazarTodos" style="flex:1 1 100%">🔁 Reemplazar todos</button>
           <button class="btn" id="bReemplazarUno" style="flex:1 1 100%">✏️ Reemplazar seleccionado</button>
-        </div>
-        <div class="row" style="margin-top:6px">
-          <button class="btn" id="bCrearFragmento" style="flex:1 1 100%">➕ Crear fragmento nuevo (antes del &lt;/body&gt;)</button>
         </div>
       </div>
     </div>
 
     <div class="row" style="margin-top:10px">
-      <button class="btn" id="bPrev">👀 Vista previa (con tu paleta)</button>
+      <button class="btn" id="bPrev">👀 Vista previa</button>
     </div>
-  </div>
-
-  <div id="notaNativa" class="hidden" style="font-size:13px;color:var(--warn);margin-top:12px">
-    Modo nativo: el servidor genera y sube todo el proyecto (Gradle/Flutter/RN) con tu nombre, paquete y color. Solo tocá "Generar y construir". El build tarda 10–30 min según la tecnología.
   </div>
 </div>
 
 <div class="card hidden" id="c3">
   <h2>3 · Datos del proyecto</h2>
-  <div class="d">Estas opciones aplican a webs, apps y juegos, en versión web y APK.</div>
   <label>Nombre de la app</label>
   <input type="text" id="fName" placeholder="Bar El Ejemplo">
-  <label>Tipo de proyecto</label>
-  <select id="fProj">
-    <option value="app" selected>App / página web</option>
-    <option value="juego">Juego</option>
-  </select>
   <label>Entrega</label>
   <select id="fType">
     <option value="web">Sitio web (URL pública)</option>
     <option value="pwa">PWA (web + instalable)</option>
     <option value="apk">APK Android</option>
   </select>
+  <label>Color principal</label>
+  <input type="color" id="fColor" value="#8b5cf6">
   <label>Logo (si no subís, se genera uno con la inicial)</label>
   <input type="file" id="fLogo" accept="image/*">
   <img id="logoPrev" alt="logo">
-  <label>Firma del APK (opcional; necesaria para conservar la misma firma entre versiones)</label>
-  <label>Archivo keystore (.jks, .keystore o .zip)</label>
-  <input type="file" id="fKeystore" accept=".jks,.keystore,.zip,application/octet-stream,application/zip">
-  <label>Alias de la clave</label>
-  <input type="text" id="fKeyAlias" placeholder="mi-alias" autocomplete="off">
-  <label>Contraseña del keystore</label>
-  <input type="password" id="fStorePass" placeholder="Contraseña del keystore" autocomplete="new-password">
-  <label>Contraseña de la clave</label>
-  <input type="password" id="fKeyPass" placeholder="Contraseña de la clave" autocomplete="new-password">
-  <div class="aviso">La firma se envía únicamente al servidor durante este build. No se guarda en el historial del navegador.</div>
+  <label>Descripción / pedido</label>
+  <textarea id="fDesc" placeholder="Qué tiene que tener la app…"></textarea>
+  <div class="cc" id="ccDesc">0 caracteres</div>
+
+  <div class="subcard" style="margin-top:12px; padding:10px; border:1px solid var(--border); border-radius:10px;">
+    <h3 style="font-size:13px; margin-bottom:4px;">🔐 Firma del APK (opcional)</h3>
+    <div class="sd" style="font-size:11.5px; color:var(--sub); margin-bottom:8px;">Subí tu keystore para firmar. Si no subís, se usa la del servidor.</div>
+    <label>Archivo keystore (.jks, .keystore o .zip)</label>
+    <input type="file" id="fKeystore" accept=".jks,.keystore,.zip,application/octet-stream,application/zip">
+    <label>Alias de la clave</label>
+    <input type="text" id="fKeyAlias" placeholder="bitacora" autocomplete="off">
+    <label>Contraseña del keystore</label>
+    <input type="password" id="fStorePass" placeholder="Contraseña" autocomplete="new-password">
+    <label>Contraseña de la clave</label>
+    <input type="password" id="fKeyPass" placeholder="Contraseña" autocomplete="new-password">
+  </div>
+
   <div class="row" style="margin-top:14px">
     <button class="btn pri" id="bBuild">Generar y construir</button>
     <button class="btn peligro hidden" id="bCancel">✕ Cancelar</button>
@@ -213,11 +204,8 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
     <a class="btn pri hidden" id="aApk" href="#">⬇ Descargar APK</a>
     <a class="btn hidden" id="aSite" href="#" target="_blank" rel="noopener">🌐 Abrir sitio web</a>
     <a class="btn hidden" id="aPwa" href="#" target="_blank" rel="noopener">📲 Abrir PWA</a>
-    <button class="btn hidden" id="bDlSite">⬇ Descargar sitio (HTML)</button>
-    <button class="btn hidden" id="bCopySite">🔗 Copiar URL del sitio</button>
     <a class="btn hidden" id="aRepo" href="#" target="_blank" rel="noopener">📁 Repositorio</a>
     <a class="btn hidden" id="aPvLive" href="#">👀 Vista previa del sitio</a>
-    <div id="qrWrap" class="hidden"><canvas id="qrCanvas" width="180" height="180"></canvas></div>
   </div>
   <div class="ult" id="ultBuild"></div>
 </div>
@@ -231,7 +219,7 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
   </div>
 </div>
 
-<footer>Bitacora APK · mate&code 🧉</footer>
+<footer>Bitácora App · mate&code 🧉</footer>
 
 <div id="pv">
   <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
@@ -240,9 +228,10 @@ footer{text-align:center;color:var(--sub);font-size:11.5px;padding:18px 0}
   </div>
   <iframe id="pvFrame" sandbox="allow-scripts"></iframe>
 </div>
+
 <script>
 // ===== CONFIGURACIÓN FIJA =====
-const API_FIJA = 'https://bitacora-app-1mq0.onrender.com';
+const API_FIJA = 'https://app-1mq0.onrender.com'; 
 const TOKEN_FIJO = '';
 // ================================
 const API = localStorage.getItem('api_base') || API_FIJA;
@@ -297,19 +286,18 @@ window.addEventListener('online', actualizarOnline);
 window.addEventListener('offline', actualizarOnline);
 actualizarOnline();
 
-// ---- API con reintento ante fallo de red ----
-function tokenActual() { return localStorage.getItem('api_token') || ''; }
+// ---- API con reintento ----
+const TOKEN = localStorage.getItem('api_token') || '';
 async function api(path, opts, intentos) {
   opts = opts || {};
   intentos = intentos == null ? 3 : intentos;
-  const token = tokenActual();
-  opts.headers = Object.assign({}, opts.headers, token ? { Authorization: 'Bearer ' + token } : {});
+  opts.headers = Object.assign({}, opts.headers, TOKEN ? { Authorization: 'Bearer ' + TOKEN } : {});
   let r;
   try {
     r = await fetch(API + path, opts);
   } catch (e) {
     if (intentos > 0) { await new Promise(r => setTimeout(r, 2000)); return api(path, opts, intentos - 1); }
-    throw new Error('No se pudo contactar al servidor (' + API + '). ¿Render redeployando? Esperá 1 minuto y reintentá.');
+    throw new Error('No se pudo contactar al servidor (' + API + ').');
   }
   const d = await r.json().catch(() => ({}));
   if (r.status === 401 && !opts._reintento) {
@@ -393,15 +381,11 @@ $('bLogout').onclick = () => {
 };
 $('bCfg').onclick = () => {
   const u = prompt('URL del servidor:', localStorage.getItem('api_base') || API_FIJA);
-  if (u !== null) {
-    const servidor = u.trim().replace(/\/$/, '');
-    if (!/^https?:\/\//i.test(servidor)) { toast('La URL debe comenzar con http:// o https://', 'err'); return; }
-    localStorage.setItem('api_base', servidor); location.reload();
-  }
+  if (u !== null) { localStorage.setItem('api_base', u.trim()); location.reload(); }
 };
 
 // ---- autoguardado del formulario ----
-const CAMPOS = ['fName','fProj','fType','manualCode'];
+const CAMPOS = ['fName','fType','fColor','fDesc','manualCode'];
 function guardarForm() {
   const o = {};
   CAMPOS.forEach(id => { const el = $(id); if (el) o[id] = el.value; });
@@ -417,17 +401,10 @@ function cargarForm() {
 CAMPOS.forEach(id => { const el = $(id); if (el) el.addEventListener('input', guardarForm); });
 function actualizarContadores() {
   $('ccCode').textContent = ($('manualCode').value || '').length + ' caracteres';
+  $('ccDesc').textContent = ($('fDesc').value || '').length + ' caracteres';
 }
 $('manualCode').addEventListener('input', actualizarContadores);
-
-// ---- tipo de código ----
-$('fKind').onchange = () => {
-  const v = $('fKind').value;
-  $('notaNativa').classList.toggle('hidden', v === 'web');
-  $('lblCodigo').textContent = v === 'web'
-    ? 'Pegá el index.html que te generé, o elegí el archivo:'
-    : 'Opcional: pegá tu código (' + (v === 'kotlin' ? 'MainActivity.kt' : v === 'flutter' ? 'main.dart' : 'App.js') + ') o dejalo vacío para la plantilla:';
-};
+$('fDesc').addEventListener('input', actualizarContadores);
 
 // ---- carga de archivos HTML ----
 $('manualFile').onchange = e => {
@@ -479,19 +456,6 @@ $('bReemplazarUno').onclick = () => {
   actualizarContadores(); guardarForm(); buscarEnCodigo();
   toast('Reemplazo aplicado', 'ok');
 };
-$('bCrearFragmento').onclick = () => {
-  const frag = $('reemplazarCon').value.trim();
-  if (!frag) { toast('Escribí el fragmento en "Reemplazar por…"', 'err'); return; }
-  const code = $('manualCode').value;
-  const idx = code.lastIndexOf('</body>');
-  if (idx === -1) {
-    $('manualCode').value = code + '\n' + frag;
-  } else {
-    $('manualCode').value = code.slice(0, idx) + frag + '\n' + code.slice(idx);
-  }
-  actualizarContadores(); guardarForm();
-  toast('Fragmento insertado antes de </body>', 'ok');
-};
 
 // ---- logo (preview) ----
 $('fLogo').onchange = e => {
@@ -500,51 +464,35 @@ $('fLogo').onchange = e => {
   rd.onload = () => { const im = $('logoPrev'); im.src = rd.result; im.style.display = 'block'; };
   rd.readAsDataURL(f);
 };
+
 // ---- ZIP upload ----
 function manejarArchivoZip(f) {
-  if (!window.JSZip) { toast('JSZip no cargó. Revisá la conexión.', 'err'); return; }
+  if (!window.JSZip) { toast('JSZip no cargó.', 'err'); return; }
   $('zipMsg').textContent = 'Leyendo ZIP…';
   const rd = new FileReader();
   rd.onload = async () => {
     try {
       const zip = await JSZip.loadAsync(rd.result);
-      const htmlCandidatos = [];
       const nombres = Object.keys(zip.files);
-      for (const nombre of nombres) {
-        const entry = zip.files[nombre];
-        if (entry.dir) continue;
-        if (nombre.startsWith('__MACOSX/')) continue;
-        if (/\.html?$/i.test(nombre)) htmlCandidatos.push(nombre);
-      }
-      if (!htmlCandidatos.length) {
-        const muestra = Object.keys(zip.files).filter(n => !zip.files[n].dir).slice(0, 8).join(', ');
-        $('zipMsg').textContent = '⚠ No encontré .html dentro. Archivos vistos: ' + muestra;
-        return;
-      }
-      const elegido = htmlCandidatos.find(n => /(^|\/)index\.html?$/i.test(n)) || htmlCandidatos[0];
-      const html = await zip.files[elegido].async('string');
-      $('manualCode').value = html;
+      const htmls = nombres.filter(n => !zip.files[n].dir && !n.startsWith('__MACOSX/') && /\.html?$/i.test(n));
+      if (!htmls.length) { $('zipMsg').textContent = '⚠ No encontré .html'; return; }
+      const elegido = htmls.find(n => /(^|\/)index\.html?$/i.test(n)) || htmls[0];
+      $('manualCode').value = await zip.files[elegido].async('string');
       actualizarContadores(); guardarForm();
       log('ZIP: HTML cargado (' + elegido + ')', 'ok');
-
       zipAssets = {};
-      const imagenes = nombres.filter(n => !zip.files[n].dir && !n.startsWith('__MACOSX/') && /\.(png|jpe?g|gif|webp|svg|avif)$/i.test(n));
-      const videos = nombres.filter(n => !zip.files[n].dir && !n.startsWith('__MACOSX/') && /\.(mp4|webm|ogg|mov)$/i.test(n));
-      const procesar = [...imagenes, ...videos];
+      const imgs = nombres.filter(n => !zip.files[n].dir && !n.startsWith('__MACOSX/') && /\.(png|jpe?g|gif|webp|svg|avif|mp4|webm|ogg|mov)$/i.test(n));
       let total = 0;
-      for (const n of procesar) {
+      for (const n of imgs) {
         const b64 = await zip.files[n].async('base64');
         const ext = n.split('.').pop().toLowerCase();
         const mime = { png:'image/png', jpg:'image/jpeg', jpeg:'image/jpeg', gif:'image/gif', webp:'image/webp', svg:'image/svg+xml', avif:'image/avif', mp4:'video/mp4', webm:'video/webm', ogg:'video/ogg', mov:'video/quicktime' }[ext] || 'application/octet-stream';
         zipAssets[n] = 'data:' + mime + ';base64,' + b64;
         total += zip.files[n]._data ? zip.files[n]._data.uncompressedSize : 0;
       }
-      $('zipMsg').textContent = '✓ ' + procesar.length + ' assets embebidos (' + bytesTxt(total) + ')';
+      $('zipMsg').textContent = '✓ ' + imgs.length + ' assets (' + bytesTxt(total) + ')';
       renderChips();
-    } catch (e) {
-      console.error('Error procesando ZIP:', e);
-      $('zipMsg').textContent = '⚠ ' + e.message;
-    }
+    } catch (e) { $('zipMsg').textContent = '⚠ ' + e.message; }
   };
   rd.readAsArrayBuffer(f);
 }
@@ -566,7 +514,7 @@ $('imgFiles').onchange = async e => {
     extraAssets[f.name] = b64;
   }
   renderChips();
-  toast(files.length + ' imagen(es) agregada(s)', 'ok');
+  toast(files.length + ' imagen(es)', 'ok');
 };
 const zonaImg = $('zonaImg');
 ['dragenter','dragover'].forEach(ev => zonaImg.addEventListener(ev, e => { e.preventDefault(); zonaImg.classList.add('over'); }));
@@ -578,26 +526,20 @@ zonaImg.addEventListener('drop', async e => {
     extraAssets[f.name] = b64;
   }
   renderChips();
-  if (files.length) toast(files.length + ' imagen(es) agregada(s)', 'ok');
+  if (files.length) toast(files.length + ' imagen(es)', 'ok');
 });
 
 function renderChips() {
   const zc = Object.keys(zipAssets), ic = Object.keys(extraAssets);
-  $('zipChips').innerHTML = zc.map(n => '<span class="chip">' + n + '<button data-tipo="zip" data-n="' + n + '">✕</button></span>').join('');
-  $('imgChips').innerHTML = ic.map(n => '<span class="chip">' + n + '<button data-tipo="img" data-n="' + n + '">✕</button></span>').join('');
+  $('zipChips').innerHTML = zc.map(n => '<span class="chip">' + escaparHtml(n) + '<button data-tipo="zip" data-n="' + escaparHtml(n) + '">✕</button></span>').join('');
+  $('imgChips').innerHTML = ic.map(n => '<span class="chip">' + escaparHtml(n) + '<button data-tipo="img" data-n="' + escaparHtml(n) + '">✕</button></span>').join('');
   document.querySelectorAll('.chip button').forEach(b => b.onclick = () => {
     if (b.dataset.tipo === 'zip') delete zipAssets[b.dataset.n];
     else delete extraAssets[b.dataset.n];
     renderChips();
   });
 }
-// ---- vista previa con paleta aplicada ----
-function inyectarPaleta(html) {
-  const css = ':root{--ac:#8b5cf6;--bg:#000;--tx:#f2f2f2;font-size:16px}\nbody{background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif}\na,button{color:var(--ac)}';
-  const estilo = '<style id="__lf_paleta">' + css + '</style>';
-  if (/<\/head>/i.test(html)) return html.replace(/<\/head>/i, estilo + '</head>');
-  return estilo + html;
-}
+
 function aplicarAssetsEnHtml(html) {
   const todos = Object.assign({}, zipAssets, extraAssets);
   Object.keys(todos).forEach(ruta => {
@@ -618,21 +560,11 @@ document.addEventListener('keydown', e => {
 $('bPrev').onclick = () => {
   let code = $('manualCode').value.trim();
   if (!code) { toast('Pegá el código primero', 'err'); return; }
-  if (!/<!DOCTYPE|<html/i.test(code)) {
-    if (!confirm('El código no parece un HTML completo. ¿Previsualizar igual?')) return;
-  }
+  if (!/<!DOCTYPE|<html/i.test(code)) { if (!confirm('No parece HTML completo. ¿Previsualizar igual?')) return; }
   code = aplicarAssetsEnHtml(code);
-  code = inyectarPaleta(code);
   $('pvFrame').removeAttribute('src');
   $('pvFrame').srcdoc = code;
-  abrirPv('Vista previa del código (con tu paleta)');
-};
-$('aPvLive').onclick = (e) => {
-  e.preventDefault();
-  if (!$('aPvLive').href || $('aPvLive').getAttribute('href') === '#') return;
-  $('pvFrame').srcdoc = '';
-  $('pvFrame').src = $('aPvLive').href;
-  abrirPv('Vista previa del sitio (puede tardar ~1 min en publicarse)');
+  abrirPv('Vista previa del código');
 };
 
 // ---- historial ----
@@ -646,18 +578,18 @@ function renderHist(){
   const h = getHist();
   $('histList').innerHTML = h.map((x, i) =>
     '<div class="hist"><div style="min-width:0"><div class="t">' + escaparHtml(x.nombre) + '</div>' +
-    '<div class="m">' + x.fecha + ' · ' + x.tipo + (x.juego ? ' · 🎮 juego' : '') + (x.ts ? ' · ' + tiempoRel(x.ts) : '') + '</div></div>' +
+    '<div class="m">' + x.fecha + ' · ' + x.tipo + (x.juego ? ' · 🎮' : '') + (x.ts ? ' · ' + tiempoRel(x.ts) : '') + '</div></div>' +
     '<div class="acciones">' +
     (x.site ? '<a href="' + x.site + '" target="_blank" rel="noopener">🌐</a>' : '') +
     (x.repo ? '<a href="' + x.repo + '" target="_blank" rel="noopener">📁</a>' : '') +
     '<button data-act="regen" data-i="' + i + '">↻</button>' +
     '<button data-act="del" data-i="' + i + '">✕</button>' +
     '</div></div>'
-  ).join('') || '<div class="m" style="padding:12px 0">Todavía no creaste nada. ¡A la primera! 🚀</div>';
+  ).join('') || '<div class="m" style="padding:12px 0">Todavía no creaste nada. 🚀</div>';
   document.querySelectorAll('#histList button[data-act]').forEach(b => b.onclick = () => {
     const i = +b.dataset.i, hh = getHist();
     if (b.dataset.act === 'del') {
-      if (!confirm('¿Borrar "' + hh[i].nombre + '" del historial?')) return;
+      if (!confirm('¿Borrar "' + hh[i].nombre + '"?')) return;
       hh.splice(i, 1); localStorage.setItem('lf_hist', JSON.stringify(hh)); renderHist();
     } else if (b.dataset.act === 'regen') {
       const e = hh[i];
@@ -706,16 +638,15 @@ $('bCancel').onclick = () => {
   clearInterval(poll);
   setConstruyendo(false);
   $('progWrap').classList.add('hidden');
-  log('⛔ Trabajo cancelado. Podés hacer los cambios y volver a generar.', 'wa');
+  log('⛔ Cancelado.', 'wa');
 };
 
-// ---- limpiar formulario ----
+// ---- limpiar ----
 $('bLimpiar').onclick = () => {
-  if (!confirm('¿Vaciar todos los campos para crear otra app? El historial se conserva.')) return;
+  if (!confirm('¿Vaciar todos los campos?')) return;
   CAMPOS.forEach(id => { const el = $(id); if (el) el.value = ''; });
-  $('fKind').value = 'web'; $('fProj').value = 'app'; $('fType').value = 'web';
-  $('manualCode').value = '';
-  $('fLogo').value = '';
+  $('fType').value = 'web'; $('fColor').value = '#8b5cf6';
+  $('manualCode').value = ''; $('fLogo').value = '';
   $('fKeystore').value = ''; $('fKeyAlias').value = ''; $('fStorePass').value = ''; $('fKeyPass').value = '';
   $('logoPrev').style.display = 'none'; $('logoPrev').src = '';
   $('zipFile').value = ''; $('imgFiles').value = '';
@@ -726,37 +657,12 @@ $('bLimpiar').onclick = () => {
   $('acts').classList.add('hidden');
   $('progWrap').classList.add('hidden');
   $('ultBuild').textContent = '';
-  ['aApk','aSite','aPwa','aRepo','aPvLive','bDlSite','bCopySite'].forEach(i => { const el=$(i); el.classList.add('hidden'); if (el.tagName==='A') el.setAttribute('href','#'); });
-  $('qrWrap').classList.add('hidden');
+  ['aApk','aSite','aPwa','aRepo','aPvLive'].forEach(i => { const el=$(i); el.classList.add('hidden'); if (el.tagName==='A') el.setAttribute('href','#'); });
   actualizarContadores();
   localStorage.removeItem('lf_form');
   toast('Formulario limpio', 'ok');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
-
-// ---- QR simple ----
-function pintarQR(texto) {
-  const cv = $('qrCanvas'); const ctx = cv.getContext('2d');
-  ctx.clearRect(0,0,cv.width,cv.height);
-  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height);
-  ctx.fillStyle = '#0d1117'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText('QR:', cv.width/2, 20);
-  if (window.QRCode) {
-    try { const tmp = document.createElement('div'); new QRCode(tmp, { text: texto, width: 180, height: 180 }); cv.replaceWith(tmp.querySelector('canvas') || cv); } catch(e) {}
-  } else {
-    ctx.fillText(texto.slice(0, 40), cv.width/2, 90);
-  }
-}
-
-async function archivoComoBase64(file) {
-  return new Promise((resolve, reject) => {
-    if (!file) return resolve('');
-    const rd = new FileReader();
-    rd.onload = () => resolve(String(rd.result).split(',')[1] || '');
-    rd.onerror = reject;
-    rd.readAsDataURL(file);
-  });
-}
 
 // ---- construir ----
 $('bBuild').onclick = async () => {
@@ -766,59 +672,31 @@ $('bBuild').onclick = async () => {
   $('acts').classList.add('hidden');
   $('progWrap').classList.add('hidden');
   $('ultBuild').textContent = '';
-  ['aApk','aSite','aPwa','aRepo','aPvLive','bDlSite','bCopySite'].forEach(i => {
+  ['aApk','aSite','aPwa','aRepo','aPvLive'].forEach(i => {
     const el = $(i); el.classList.add('hidden');
     if (el.tagName === 'A') el.setAttribute('href', '#');
   });
-  $('qrWrap').classList.add('hidden');
 
   const type = $('fType').value;
   const kind = $('fKind').value;
   const appName = $('fName').value.trim();
-  const proj = $('fProj').value;
 
-  if (!appName) { toast('Poné un nombre de app.', 'err'); $('fName').focus(); return; }
+  if (!appName) { toast('Poné un nombre de app', 'err'); $('fName').focus(); return; }
   if (kind === 'web' && !$('manualCode').value.trim()) {
-    toast('En modo Web necesitás pegar el código o cargar un ZIP.', 'err'); $('manualCode').focus(); return;
+    toast('En modo Web necesitás pegar el código', 'err'); $('manualCode').focus(); return;
   }
-  if (!navigator.onLine) {
-    window._pendingBuild = true;
-    toast('Sin conexión: se reintentará al reconectar', 'err');
-    return;
-  }
+  if (!navigator.onLine) { window._pendingBuild = true; toast('Sin conexión: se reintentará', 'err'); return; }
 
   const lf = $('fLogo').files[0];
-  const logo = lf ? await logoDeArchivo(lf) : logoDeLetra(appName, '#8b5cf6');
-  const keystoreFile = $('fKeystore').files[0];
-  const keystoreBase64 = await archivoComoBase64(keystoreFile);
-  const signing = {
-    keystore: keystoreBase64,
-    keystoreName: keystoreFile ? keystoreFile.name : '',
-    alias: $('fKeyAlias').value.trim(),
-    storePassword: $('fStorePass').value,
-    keyPassword: $('fKeyPass').value
-  };
+  const logo = lf ? await logoDeArchivo(lf) : logoDeLetra(appName, $('fColor').value);
   const body = {
     mode: 'manual', type,
-    kind, proj,
-    appName, clientName: 'Cliente',
+    kind: kind,
+    appName: appName,
     repoSlug: slugify(appName),
-    color: '#8b5cf6',
-    description: '',
-    whatsapp: '',
-    theme: 'amoled',
-    font: 'system',
-    fsize: 'media',
+    color: $('fColor').value,
+    description: $('fDesc').value,
     logo: logo,
-    icon: logo,
-    appIcon: logo,
-    signing,
-    keystore: signing.keystore,
-    keystoreName: signing.keystoreName,
-    keyAlias: signing.alias,
-    storePassword: signing.storePassword,
-    keyPassword: signing.keyPassword,
-    model: '',
     manualCode: kind === 'web' ? aplicarAssetsEnHtml($('manualCode').value) : '',
     assets: Object.assign({}, zipAssets, extraAssets)
   };
@@ -831,7 +709,7 @@ $('bBuild').onclick = async () => {
   try {
     log('Creando repositorio y subiendo archivos…');
     const r = await api('/api/build', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal });
-    log('✓ Repo creado: ' + r.repo, 'ok');
+    log('✓ Repo: ' + r.repo, 'ok');
     log('✓ Archivos subidos', 'ok');
     setProg(1);
     $('aRepo').href = r.repoUrl; $('aRepo').classList.remove('hidden');
@@ -839,22 +717,11 @@ $('bBuild').onclick = async () => {
       $('aSite').href = r.siteUrl; $('aSite').classList.remove('hidden');
       if (type === 'pwa') { $('aPwa').href = r.siteUrl; $('aPwa').classList.remove('hidden'); }
       $('aPvLive').href = r.siteUrl; $('aPvLive').classList.remove('hidden');
-      $('bCopySite').classList.remove('hidden');
-      $('bDlSite').classList.remove('hidden');
-      $('bCopySite').onclick = () => { navigator.clipboard.writeText(r.siteUrl); toast('URL copiada', 'ok'); };
-      $('bDlSite').onclick = () => {
-        const blob = new Blob([aplicarAssetsEnHtml($('manualCode').value)], { type: 'text/html' });
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-        a.download = slugify(appName) + '.html'; a.click();
-        setTimeout(() => URL.revokeObjectURL(a.href), 5000);
-      };
-      $('qrWrap').classList.remove('hidden');
-      pintarQR(r.siteUrl);
-      log('✓ Web: ' + r.siteUrl + ' (~1 min en publicarse)', 'ok');
+      log('✓ Web: ' + r.siteUrl, 'ok');
     }
     const formSnapshot = {}; CAMPOS.forEach(id => { const el=$(id); if(el) formSnapshot[id]=el.value; });
     saveHist({
-      nombre: body.appName, tipo: type, juego: proj === 'juego',
+      nombre: body.appName, tipo: type,
       repo: r.repoUrl, site: r.siteUrl || '',
       fecha: new Date().toLocaleString('es-AR'),
       ts: Date.now(), form: formSnapshot, logo
@@ -863,7 +730,7 @@ $('bBuild').onclick = async () => {
     $('ultBuild').textContent = 'Último build: ' + new Date().toLocaleString('es-AR');
 
     if (type === 'apk' || type === 'pwa') {
-      log('Compilando APK en GitHub Actions… (podés cancelar)', 'wa');
+      log('Compilando APK en GitHub Actions…', 'wa');
       let fallos = 0;
       poll = setInterval(async () => {
         try {
@@ -872,25 +739,28 @@ $('bBuild').onclick = async () => {
           fallos = 0;
           const st = (run.status || '') + (run.conclusion ? ' → ' + run.conclusion : '');
           if (st && st !== window._lastSt) { log('estado: ' + st); window._lastSt = st; }
-          if (run.status === 'queued' || run.status === 'in_progress') setProg(2, 'Compilando en Actions… (' + run.status + ')');
+          if (run.status === 'queued' || run.status === 'in_progress') setProg(2, 'Compilando… (' + run.status + ')');
           if (run.conclusion === 'success') {
             clearInterval(poll);
             setProg(pasos.length - 1, 'Listo ✓');
-            log('✓ APK listo', 'ok');
-            const urlApk = r.artifactUrl || API + '/api/artifact?repo=' + encodeURIComponent(r.repo);
+            log('✓ APK listo. Iniciando descarga…', 'ok');
+            
+            const urlApk = API + '/api/artifact?repo=' + encodeURIComponent(r.repo);
             $('aApk').href = urlApk;
-            $('aApk').download = slugify(appName) + '.apk';
-            $('aApk').onclick = (e) => { e.preventDefault(); descargarConAuth(urlApk, slugify(appName) + '.apk'); };
+            $('aApk').textContent = '⬇ Descargar APK';
             $('aApk').classList.remove('hidden');
             $('acts').classList.remove('hidden');
+
+            // ⭐ TRUCO FABRICAPP: Dispara la descarga automática abriendo el diálogo de Android
+            descargarConAuth(urlApk, slugify(appName) + '.apk');
           } else if (run.conclusion) {
             clearInterval(poll);
             setProg(2, '✗ ' + run.conclusion);
-            log('✗ Compilación: ' + run.conclusion + '. Revisá Actions en el repo.', 'er');
+            log('✗ Compilación: ' + run.conclusion, 'er');
           }
         } catch (e) {
           fallos++;
-          if (fallos >= 3) { clearInterval(poll); log('✗ No se pudo consultar el estado del build.', 'er'); }
+          if (fallos >= 3) { clearInterval(poll); log('✗ No se pudo consultar el estado.', 'er'); }
         }
       }, 15000);
     } else {
@@ -898,51 +768,28 @@ $('bBuild').onclick = async () => {
     }
     $('acts').classList.remove('hidden');
   } catch (e) {
-    if (e.name === 'AbortError') { }
-    else log('✗ ' + e.message, 'er');
+    if (e.name !== 'AbortError') log('✗ ' + e.message, 'er');
   } finally {
     setConstruyendo(false);
     ctl = null;
   }
 };
 
-// ---- descarga con token en header ----
+// ---- descarga con token ----
 async function descargarConAuth(url, filename) {
   try {
-    const token = tokenActual();
-    const r = await fetch(url, {
-      headers: token ? { Authorization: 'Bearer ' + token } : {},
-      credentials: 'include'
-    });
+    const r = await fetch(url, { headers: TOKEN ? { Authorization: 'Bearer ' + TOKEN } : {} });
     if (!r.ok) throw new Error('Error ' + r.status);
     const blob = await r.blob();
-    if (!blob.size) throw new Error('El servidor devolvió un archivo vacío');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = filename;
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 5000);
   } catch (e) {
-    const directo = document.createElement('a');
-    directo.href = url; directo.download = filename; directo.target = '_blank';
-    document.body.appendChild(directo); directo.click(); directo.remove();
-    toast('Descarga iniciada en una nueva pestaña', 'ok');
+    alert('No se pudo descargar: ' + e.message);
   }
 }
-
-// ---- caducidad del token (30 días) ----
-(function checkTokenAge() {
-  const ts = +(localStorage.getItem('lf_token_ts') || 0);
-  if (ts && Date.now() - ts > 30 * 86400 * 1000) {
-    localStorage.removeItem('api_token'); localStorage.removeItem('gh_pat');
-    toast('El token venció. Reconectá GitHub.', 'err');
-  } else if (tokenActual()) {
-    localStorage.setItem('lf_token_ts', ts || Date.now());
-  }
-})();
-
-// ---- cancelar polling al cerrar pestaña ----
-window.addEventListener('beforeunload', () => { clearInterval(poll); if (ctl) ctl.abort(); });
 
 // ---- arranque ----
 const q = new URLSearchParams(location.search);
